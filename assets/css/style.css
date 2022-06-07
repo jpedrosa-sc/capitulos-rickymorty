@@ -1,0 +1,29 @@
+header, content, footer{
+	min-height: 20px;
+	display: block;
+	border:  1px solid #0f0;
+	width: 100%;
+}
+
+
+main > header,
+main > content,
+main > footer{
+	border-width: 3px;
+	border-color: #f00;
+}
+
+
+
+article{
+	width: 30%;
+	display: inline-block;
+	margin: 10px;
+	border:  5px solid green;
+}
+article > header,
+article > content,
+article > footer{
+	border-width: 1px;
+	border-color: #00f;
+}
