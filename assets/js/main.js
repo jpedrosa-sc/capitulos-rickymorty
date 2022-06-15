@@ -2,8 +2,26 @@ console.log('Inicio')
 
 function getData(){
 	let episodios_json = JSON.parse(rym)
-	return episodios_json._embedded.episodes;
+	let lista_episodios = episodios_json._embedded.episodes;
+
+	let episodios = [];
+
+	for(let i=0; i < lista_episodios.length; i++){
+		//ch1 = new Chapter(5,'El principio', 1, 1, '', 'blabla');
+		ch = new Chapter(lista_episodios[i].id,
+						lista_episodios[i].name,
+						lista_episodios[i].season,
+						lista_episodios[i].number,
+						lista_episodios[i].image,
+						lista_episodios[i].summary
+			);
+		episodios.push(ch);
+
+	}
+	return episodios;
 }
+
+
 
 
 
@@ -15,54 +33,33 @@ function displayData(data){
 
 	for (var i = 0; i < data.length; i++) {
 		// mostrarElemento
-		episodios_html += episode_toHTML(data[i])
-		if(i< data.length-1 && data[i].season != data[i+1].season){
-			episodios_html += "<h2>Cambio Temporada</h2>";
-		}
+		episodios_html += data[i].toHtml();
+		
 	}
 	document.querySelector('content').innerHTML = episodios_html;
 }
 
 
-function displaySeason(data, season){
-	let episodios_html = '';
 
-	for (var i = 0; i < data.length; i++) {
-		// mostrarElemento
-		if(data[i].season == season){
-			episodios_html += episode_toHTML(data[i])
-		}
-	}
-	document.querySelector('content').innerHTML = episodios_html;
-}
-
-
-/*
-Dado un objeto json de un episodio, devuelve su correspondiente html
-*/
-function episode_toHTML(episode){
-	let amaia = '<article class="episodio temp_'+episode.season+' type_regular" id="'+episode.id+'">\
-				<header>\
-					<h2>'+episode.name+'</h2>\
-					<small>Temporada '+episode.season+' / episodio '+episode.number+'</small>\
-					<img src="'+episode.image+'" alt="'+episode.name+'">\
-				</header>\
-				<content>\
-					<strong>Descripción:</strong><br />\
-					<p>'+episode.summary+'</p>\
-				</content>\
-				<footer>\
-					Rating: ***\
-				</footer>\
-			</article>';
-	return amaia
-}
 
 
 function main(){
 	data = getData(); //Obtenemos los episodios
+
+	console.log(data);
 	displayData(data); //Mostramos los episodios
 	//displaySeason(data, 1)
 }
 
 main();
+
+
+
+/*ch1 = new Chapter(5,'El principio', 1, 1, '', 'blabla');
+
+console.log(ch1)
+console.log(ch1.toString())
+
+document.querySelector('content').innerHTML = ch1.toHtml();
+
+*/
